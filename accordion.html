@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="stylesheet" href="/assets/css/slick.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.css"> <!-- You can add custom styles here -->
+    <link rel="stylesheet" href="/assets/css/accordion.css">
+    <title>SMK Accordion with Auto-Toggle</title>
+    <style>
+        .accordion-item .accordion-content {
+            display: none;
+            margin-bottom: 10px;
+        }
+
+        .accordion-item.active .accordion-content {
+            display: block;
+            transition: all 0.5s ease-in-out;
+        }
+        .accordion-content { transition: all 0.5s ease-in-out;}  
+        .accordion-header { background: #efe6e6; padding: 20px; font-size: 25px; position: relative;}      
+        .accordion-content { padding-left:20px;}
+        .accordion-item:not(.active) .progress-bar , .accordion-item:not(.active) .progress-bar { display: none; }
+        .accordion-item.active .progress-bar { 
+            width: calc(100% + 40px); background-color: #f0f0f0;  height: 30px; position: relative; height: 3px; bottom: -20px; left: -20px; right: -20px;}
+        .accordion-item.active .progress { background-color: #4caf50; /* Change this to your desired progress color */
+                    height: 100%; width: 0;  position: absolute; top: 0; left: 0;
+                    transition: width 2s linear; /* Adjust the animation duration as needed */
+                    animation: increaseProgress 5s linear infinite; /* Adjust the animation duration as needed */
+        }
+         
+        .accordion-header::after { 
+            display: block;
+            position: absolute;
+            right: 0px;
+            /* background-color: lightgray; */
+            left: auto;
+            top: 38%;
+            bottom: 0;
+            margin: auto;
+            content: "";
+            width: 20px;
+            height: 20px;
+            transition: all 0.3s linear;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            -ms-transition: all 0.3s linear;
+            background-image: url(../assets/green-faq-arrow.svg);
+            margin-top: 0px;
+            background-repeat: no-repeat;
+            background-position: 0% 0%;
+            filter: brightness(0);
+            opacity: 0.5;
+            right:20px;
+            cursor: pointer;
+        }
+        @keyframes increaseProgress {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+        .accordion-item.active .accordion-header::after {background-image: url(../assets/minus-solid.svg);} 
+    </style>
+</head>
+<body>
+    <div class="accordion" id="myAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                Section 1
+                <div class="progress-bar">
+                   <div class="progress"></div>
+                </div>
+            </h2>
+            <div class="accordion-content">
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam, culpa. Dolorem iusto neque possimus facilis quo, magnam fugiat incidunt, a quibusdam minima explicabo enim molestiae modi ad ipsa nesciunt recusandae laudantium? Dolore distinctio natus iste?</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                Section 2
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                 </div>
+            </h2>
+            <div class="accordion-content">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae modi eveniet, distinctio quibusdam repellat voluptate quaerat placeat, fugiat possimus quam perspiciatis, impedit tempore nesciunt corporis exercitationem reprehenderit consequatur repellendus sequi hic voluptatem consectetur sapiente dolorum deleniti harum. Quasi, quisquam vel?</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                Section 3
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                 </div>
+            </h2>
+            <div class="accordion-content">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim ipsum rem pariatur recusandae voluptatem delectus harum magnam reiciendis officia ex placeat quasi natus aliquam dolore dolores, ullam praesentium fugit ducimus.</p>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/jquery-3.6.1.js"></script>
+    <script src="/assets/js/slick.min.js"></script>
+    <script src="/assets/js/accordion.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myAccordion').smkAccordion({
+                closeAble: true,
+                animation: true,
+                showIcon: true,
+                duration: 300
+            });
+        });
+        
+        $(document).ready(function() {
+        function autoToggleAccordion() {
+            var $accordionItems = $('.accordion-item');
+            var currentIndex = 0;
+    
+            function toggleAccordionItem(index) {
+                $accordionItems.removeClass('active');
+                $accordionItems.eq(index).toggleClass('active');
+            }
+    
+            function autoToggle() {
+                toggleAccordionItem(currentIndex);
+                currentIndex = (currentIndex + 1) % $accordionItems.length;
+            }
+    
+            // Initial toggle
+            toggleAccordionItem(currentIndex);
+    
+            // Set the time interval (in milliseconds)
+            var interval = 5000; // Adjust this value as needed
+    
+            // Automatically toggle accordion items at the specified interval
+            setInterval(autoToggle, interval);
+        }
+    
+        // Call the autoToggleAccordion function to start auto-toggling
+        autoToggleAccordion();
+    });
+
+    $(document).ready(function() {
+            let $accordionItems = $('.accordion-item');
+            let currentIndex = 0;
+            // Handle click event on icon
+            $('.accordion-header').click(function() {
+                // Remove 'active' class from all accordion items
+                $accordionItems.removeClass('active');
+                // $accordionItems.eq(index).toggleClass('active');
+
+                // Add 'active' class to the parent accordion item
+                $(this).closest('.accordion-item').addClass('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

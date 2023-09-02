@@ -7,6 +7,20 @@
     <link rel="stylesheet" href="/assets/css/font-awesome.css">
     <link rel="stylesheet" href="/assets/css/slick.min.css">
     <link rel="stylesheet" href="/assets/css/header.css">
+    
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Auto-Expanding Accordion</title>
+    <style>
+        .accordion-item {
+                display: none;
+                margin-bottom: 10px;
+            }
+
+        .accordion-item.active {
+                display: block;
+            }
+    </style>
 </head>
 <body>  
     <header>
@@ -53,6 +67,27 @@
         </div>
     </header>
     <main>
+
+    <div class="accordion" id="myAccordion">
+        <div class="accordion-item active">
+            <h2 class="accordion-header">Section 1</h2>
+            <div class="accordion-content">
+                <p>Content for section 1.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">Section 2</h2>
+            <div class="accordion-content">
+                <p>Content for section 2.</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">Section 3</h2>
+            <div class="accordion-content">
+                <p>Content for section 3.</p>
+            </div>
+        </div>
+    </div>
 
         <div class="demo-text">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus voluptatum at aspernatur. Sapiente, at qui quasi harum illum quia totam saepe eum. Nisi, in placeat voluptate quos tempore nesciunt nulla.
@@ -197,8 +232,32 @@
         </div>
     </main>
     <footer></footer>
-    <script src="/assets/js/jquery-3.6.1.js"></script>
+     
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/slick.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var $accordionItems = $('.accordion-item');
+            var currentIndex = 0;
+
+            function toggleAccordionItem(index) {
+                $accordionItems.eq(index).toggleClass('active');
+            }
+
+            function autoToggle() {
+                toggleAccordionItem(currentIndex);
+                currentIndex = (currentIndex + 1) % $accordionItems.length;
+            }
+
+            // Initial toggle
+            toggleAccordionItem(currentIndex);
+
+            // Set the time interval (in milliseconds)
+            var interval = 3000; // Adjust this value as needed
+
+            // Automatically toggle accordion items at the specified interval
+            setInterval(autoToggle, interval);
+        });
+    </script>   
 </body>
 </html>
